@@ -1075,7 +1075,7 @@
     <h2 class="section-title">Place an order</h2>
     <p class="section-sub">Fill in the details below and our team will be in touch within 24–48 hours to confirm your order and provide payment information.</p>
     <div class="form-section">
-      <form class="form-grid" id="order-form" action="https://formspree.io/f/xnjyvvyv" method="POST" onsubmit="return validateOrder(event)">
+      <form class="form-grid" id="order-form" action="https://formspree.io/f/xnjyvvyv" method="POST">
         <div class="form-group">
           <label class="form-label">First Name <span>*</span></label>
           <input class="form-input" type="text" name="First Name" placeholder="John" id="f-firstname" required>
@@ -1145,10 +1145,8 @@
             <span style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">I confirm that I am 18 years of age or older and that all products ordered are for research and educational purposes only. I acknowledge that these compounds are not approved for human consumption.</span>
           </label>
         </div>
-        <!-- Formspree redirect back to same page after submission -->
-        <input type="hidden" name="_next" value="https://orion-peptide-labs2.netlify.app/?submitted=true">
         <div class="form-full">
-          <button class="form-submit" type="submit">Submit Order Enquiry</button>
+          <button class="form-submit" type="submit" id="submit-btn">Submit Order Enquiry</button>
           <p class="form-note">Your enquiry will be sent securely to our team. We respond within 24–48 hours. No payment is taken at this stage.</p>
         </div>
       </form>
@@ -1295,25 +1293,48 @@ function toggleFaq(el) {
   }
 }
 
-function validateOrder(e) {
-  if (!document.getElementById('f-disclaimer').checked) {
-    e.preventDefault();
-    alert('Please confirm the research use disclaimer before submitting.');
-    return false;
-  }
-  return true;
-}
+document.addEventListener('DOMContentLoaded', function() {
+  const form = document.getElementById('order-form');
+  if (!form) return;
 
-// Show success message if redirected back after Formspree submission
-if (window.location.search.includes('submitted=true')) {
-  document.addEventListener('DOMContentLoaded', function() {
-    showPage('order');
-    const form = document.getElementById('order-form');
-    const box = document.getElementById('success-box');
-    if (form) form.style.display = 'none';
-    if (box) box.classList.add('show');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    // Check disclaimer
+    if (!document.getElementById('f-disclaimer').checked) {
+      alert('Please confirm the research use disclaimer before submitting.');
+      return;
+    }
+
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    try {
+      const response = await fetch('https://formspree.io/f/xnjyvvyv', {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        form.style.display = 'none';
+        document.getElementById('success-box').classList.add('show');
+        window.scrollTo(0, 0);
+      } else {
+        const data = await response.json();
+        const msg = data.errors ? data.errors.map(e => e.message).join(', ') : 'Something went wrong. Please try again.';
+        alert('Submission error: ' + msg);
+        btn.disabled = false;
+        btn.textContent = 'Submit Order Enquiry';
+      }
+    } catch (err) {
+      alert('Network error — please check your connection and try again.');
+      btn.disabled = false;
+      btn.textContent = 'Submit Order Enquiry';
+    }
   });
-}
+});
 </script>
 </body>
 </html>
