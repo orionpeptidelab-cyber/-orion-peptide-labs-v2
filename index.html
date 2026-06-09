@@ -553,20 +553,121 @@
     line-height: 1.7;
   }
 
-  @media (max-width: 640px) {
-    .nav-links { gap: 1rem; }
-    .nav-links a { font-size: 12px; }
+  /* Hamburger button — hidden on desktop */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 200;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile drawer */
+  .nav-drawer {
+    display: none;
+    position: fixed;
+    top: 64px;
+    left: 0; right: 0;
+    background: rgba(10,15,30,0.98);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0 24px;
+    z-index: 150;
+    flex-direction: column;
+    gap: 0;
+  }
+  .nav-drawer.open { display: flex; }
+  .nav-drawer li { list-style: none; }
+  .nav-drawer a {
+    display: block;
+    padding: 14px 24px;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+    text-decoration: none;
+  }
+  .nav-drawer a:hover, .nav-drawer a.active { color: var(--text-primary); background: rgba(255,255,255,0.03); }
+  .nav-drawer .nav-cta {
+    margin: 8px 24px 0;
+    display: block;
+    text-align: center;
+    border-radius: 8px;
+    padding: 12px 18px;
+    background: var(--blue-accent) !important;
+    color: white !important;
+  }
+
+  @media (max-width: 680px) {
+    /* Nav */
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    nav { padding: 0 1.25rem; }
+
+    /* Hero */
+    .hero { padding: 60px 1.25rem 48px; }
+    .hero h1 { font-size: 32px; }
+    .hero-sub { font-size: 15px; }
+    .hero-actions { flex-direction: column; align-items: stretch; }
+    .hero-actions button { width: 100%; }
+
+    /* Trust bar */
+    .trust-bar {
+      padding: 16px 1.25rem;
+      gap: 10px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    /* Sections */
+    .section { padding: 48px 1.25rem; }
+    .section-title { font-size: 24px; }
+
+    /* Product grid */
+    .product-grid { grid-template-columns: 1fr; }
+
+    /* Safety grid */
+    .safety-grid { grid-template-columns: 1fr; }
+
+    /* Product detail */
+    .product-detail { padding: 32px 1.25rem; }
+    .detail-title { font-size: 28px; }
+    .price-box { flex-direction: column; align-items: flex-start; gap: 12px; }
+    .price-box .btn-primary { width: 100%; }
+
+    /* Form */
     .form-grid { grid-template-columns: 1fr; }
     .form-full { grid-column: 1; }
-    .trust-bar { gap: 1rem; }
-    .price-box { flex-direction: column; align-items: flex-start; }
+    .form-section { padding: 0; }
+
+    /* Lab cert box */
+    .lab-cert-box { padding: 24px 16px; }
+
+    /* Footer */
+    footer { padding: 24px 1.25rem; }
   }
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo" onclick="showPage('home')">
+  <div class="logo" onclick="showPage('home'); closeDrawer();">
     <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="16" cy="8" r="2.5" fill="#3b82f6"/>
       <circle cx="7" cy="22" r="2.5" fill="#60a5fa"/>
@@ -585,7 +686,18 @@
     <li><a onclick="showPage('faq')" id="nav-faq">FAQ</a></li>
     <li><a onclick="showPage('order')" id="nav-order" class="nav-cta">Place an Order</a></li>
   </ul>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleDrawer()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<!-- MOBILE NAV DRAWER -->
+<ul class="nav-drawer" id="nav-drawer">
+  <li><a onclick="showPage('products'); closeDrawer();" id="drawer-products">Products</a></li>
+  <li><a onclick="showPage('safety'); closeDrawer();" id="drawer-safety">Safety & Testing</a></li>
+  <li><a onclick="showPage('faq'); closeDrawer();" id="drawer-faq">FAQ</a></li>
+  <li><a onclick="showPage('order'); closeDrawer();" id="drawer-order" class="nav-cta">Place an Order</a></li>
+</ul>
 
 <!-- HOME -->
 <div id="page-home" class="page active">
@@ -939,13 +1051,27 @@ const products = {
   }
 };
 
+function toggleDrawer() {
+  const drawer = document.getElementById('nav-drawer');
+  const btn = document.getElementById('hamburger');
+  drawer.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+function closeDrawer() {
+  document.getElementById('nav-drawer').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.nav-links a, .nav-drawer a').forEach(a => a.classList.remove('active'));
   const el = document.getElementById('page-' + page);
   if (el) el.classList.add('active');
   const navEl = document.getElementById('nav-' + page);
   if (navEl) navEl.classList.add('active');
+  const drawerEl = document.getElementById('drawer-' + page);
+  if (drawerEl) drawerEl.classList.add('active');
   window.scrollTo(0, 0);
 }
 
@@ -979,7 +1105,13 @@ function showProduct(key) {
   `;
   document.getElementById('product-detail-content').innerHTML = html;
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a, .nav-drawer a').forEach(a => a.classList.remove('active'));
   document.getElementById('page-product-detail').classList.add('active');
+  const navProducts = document.getElementById('nav-products');
+  if (navProducts) navProducts.classList.add('active');
+  const drawerProducts = document.getElementById('drawer-products');
+  if (drawerProducts) drawerProducts.classList.add('active');
+  closeDrawer();
   window.scrollTo(0, 0);
 }
 
