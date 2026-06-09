@@ -1,0 +1,1017 @@
+HTMLEOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orion Peptide Labs</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy: #0a0f1e;
+    --navy-mid: #111827;
+    --navy-light: #1a2540;
+    --blue-accent: #3b82f6;
+    --blue-bright: #60a5fa;
+    --teal: #0ea5e9;
+    --text-primary: #f1f5f9;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --border: rgba(59,130,246,0.15);
+    --border-bright: rgba(59,130,246,0.35);
+    --card-bg: rgba(255,255,255,0.03);
+    --card-hover: rgba(255,255,255,0.05);
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--navy);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,15,30,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .logo-icon { width: 32px; height: 32px; }
+
+  .logo-text {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text-primary);
+  }
+
+  .logo-text span { color: var(--blue-accent); }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+
+  .nav-links a:hover, .nav-links a.active { color: var(--text-primary); }
+
+  .nav-cta {
+    background: var(--blue-accent);
+    color: white !important;
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.03em;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--blue-bright) !important; color: white !important; }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .hero {
+    position: relative;
+    padding: 100px 2rem 80px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(59,130,246,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(ellipse, rgba(59,130,246,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(59,130,246,0.1);
+    border: 1px solid rgba(59,130,246,0.25);
+    color: var(--blue-bright);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .hero h1 em { font-style: normal; color: var(--blue-accent); }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--text-secondary);
+    max-width: 560px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .btn-primary {
+    background: var(--blue-accent);
+    color: white;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.01em;
+  }
+
+  .btn-primary:hover { background: var(--blue-bright); transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    border: 1px solid var(--border-bright);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover { color: var(--text-primary); border-color: var(--blue-accent); background: rgba(59,130,246,0.05); }
+
+  .trust-bar {
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    background: rgba(255,255,255,0.01);
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    letter-spacing: 0.01em;
+  }
+
+  .trust-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue-accent); flex-shrink: 0; }
+
+  .section { padding: 72px 2rem; max-width: 1100px; margin: 0 auto; }
+
+  .section-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--blue-accent);
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+
+  .section-sub {
+    font-size: 16px;
+    color: var(--text-secondary);
+    max-width: 520px;
+    margin-bottom: 48px;
+    line-height: 1.7;
+  }
+
+  .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+
+  .product-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .product-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--blue-accent), var(--teal));
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+
+  .product-card:hover { background: var(--card-hover); border-color: var(--border-bright); transform: translateY(-2px); }
+  .product-card:hover::before { opacity: 1; }
+
+  .product-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+  }
+
+  .tag-recovery { background: rgba(16,185,129,0.1); color: #34d399; }
+  .tag-growth { background: rgba(59,130,246,0.1); color: var(--blue-bright); }
+  .tag-anti-aging { background: rgba(168,85,247,0.1); color: #c084fc; }
+  .tag-weight { background: rgba(249,115,22,0.1); color: #fb923c; }
+  .tag-stack { background: rgba(14,165,233,0.1); color: #38bdf8; }
+
+  .product-name { font-size: 19px; font-weight: 700; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .product-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 20px; }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .product-price { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+  .product-link { font-size: 13px; color: var(--blue-accent); font-weight: 600; }
+
+  .product-detail { max-width: 800px; margin: 0 auto; padding: 48px 2rem; }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    margin-bottom: 32px;
+    background: none;
+    border: none;
+    transition: color 0.2s;
+    padding: 0;
+  }
+
+  .back-btn:hover { color: var(--text-primary); }
+
+  .detail-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+
+  .detail-title { font-size: clamp(28px, 4vw, 44px); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .detail-subtitle { font-size: 16px; color: var(--text-secondary); margin-bottom: 32px; font-style: italic; }
+  .detail-divider { height: 1px; background: var(--border); margin: 32px 0; }
+
+  .detail-section-title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--blue-accent);
+    margin-bottom: 14px;
+  }
+
+  .detail-body { font-size: 15px; color: var(--text-secondary); line-height: 1.8; margin-bottom: 24px; }
+
+  .detail-list { list-style: none; display: grid; gap: 8px; margin-bottom: 24px; }
+
+  .detail-list li {
+    font-size: 14px;
+    color: var(--text-secondary);
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .detail-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 10px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--blue-accent);
+  }
+
+  .price-box {
+    background: rgba(59,130,246,0.06);
+    border: 1px solid rgba(59,130,246,0.2);
+    border-radius: 10px;
+    padding: 20px 24px;
+    margin: 32px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .price-label { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+  .price-tbc { font-size: 14px; color: var(--text-muted); font-style: italic; }
+
+  .disclaimer-box {
+    background: rgba(249,115,22,0.06);
+    border: 1px solid rgba(249,115,22,0.2);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-size: 12px;
+    color: #fb923c;
+    line-height: 1.6;
+    margin-top: 24px;
+  }
+
+  .safety-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-bottom: 48px; }
+
+  .safety-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+  }
+
+  .safety-icon {
+    width: 40px; height: 40px;
+    background: rgba(59,130,246,0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    font-size: 18px;
+  }
+
+  .safety-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 10px; letter-spacing: -0.01em; }
+  .safety-card p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; }
+
+  .lab-cert-box {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 36px;
+    text-align: center;
+  }
+
+  .cert-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16,185,129,0.08);
+    border: 1px solid rgba(16,185,129,0.25);
+    color: #34d399;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 6px 16px;
+    border-radius: 100px;
+    margin-bottom: 20px;
+  }
+
+  .faq-item { border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; overflow: hidden; background: var(--card-bg); }
+
+  .faq-q {
+    padding: 18px 22px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    transition: background 0.15s;
+  }
+
+  .faq-q:hover { background: rgba(255,255,255,0.02); }
+  .faq-toggle { font-size: 20px; color: var(--blue-accent); flex-shrink: 0; font-weight: 300; line-height: 1; }
+
+  .faq-a {
+    padding: 0 22px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.75;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s;
+  }
+
+  .faq-a.open { max-height: 300px; padding: 0 22px 18px; }
+
+  .form-section { max-width: 680px; margin: 0 auto; }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .form-full { grid-column: 1 / -1; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+
+  .form-label { font-size: 13px; font-weight: 500; color: var(--text-secondary); letter-spacing: 0.01em; }
+  .form-label span { color: var(--blue-accent); }
+
+  .form-input, .form-select, .form-textarea {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border-bright);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    font-family: inherit;
+    width: 100%;
+  }
+
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: var(--blue-accent);
+    background: rgba(59,130,246,0.05);
+  }
+
+  .form-select { cursor: pointer; }
+  .form-select option { background: #1a2540; color: var(--text-primary); }
+  .form-textarea { resize: vertical; min-height: 100px; }
+
+  .form-submit {
+    width: 100%;
+    padding: 14px;
+    background: var(--blue-accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.02em;
+    margin-top: 8px;
+  }
+
+  .form-submit:hover { background: var(--blue-bright); transform: translateY(-1px); }
+
+  .form-note { font-size: 12px; color: var(--text-muted); text-align: center; margin-top: 12px; line-height: 1.6; }
+
+  .success-box {
+    display: none;
+    background: rgba(16,185,129,0.06);
+    border: 1px solid rgba(16,185,129,0.25);
+    border-radius: 12px;
+    padding: 32px;
+    text-align: center;
+    margin-top: 24px;
+  }
+
+  .success-box.show { display: block; }
+  .success-title { font-size: 20px; font-weight: 700; color: #34d399; margin-bottom: 8px; }
+  .success-body { font-size: 14px; color: var(--text-secondary); }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 2rem;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.8;
+  }
+
+  footer strong { color: var(--text-secondary); }
+
+  .footer-disclaimer {
+    max-width: 700px;
+    margin: 0 auto 16px;
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .product-stacks-note {
+    background: rgba(14,165,233,0.05);
+    border: 1px solid rgba(14,165,233,0.15);
+    border-radius: 8px;
+    padding: 16px 20px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 32px;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 640px) {
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 12px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-full { grid-column: 1; }
+    .trust-bar { gap: 1rem; }
+    .price-box { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo" onclick="showPage('home')">
+    <svg class="logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="8" r="2.5" fill="#3b82f6"/>
+      <circle cx="7" cy="22" r="2.5" fill="#60a5fa"/>
+      <circle cx="25" cy="22" r="2.5" fill="#60a5fa"/>
+      <circle cx="16" cy="16" r="1.5" fill="#93c5fd"/>
+      <line x1="16" y1="8" x2="7" y2="22" stroke="#3b82f6" stroke-width="0.8" stroke-opacity="0.5"/>
+      <line x1="16" y1="8" x2="25" y2="22" stroke="#3b82f6" stroke-width="0.8" stroke-opacity="0.5"/>
+      <line x1="7" y1="22" x2="25" y2="22" stroke="#3b82f6" stroke-width="0.8" stroke-opacity="0.5"/>
+      <line x1="16" y1="8" x2="16" y2="16" stroke="#60a5fa" stroke-width="0.8" stroke-opacity="0.4"/>
+    </svg>
+    <span class="logo-text">Orion <span>Peptide Labs</span></span>
+  </div>
+  <ul class="nav-links">
+    <li><a onclick="showPage('products')" id="nav-products">Products</a></li>
+    <li><a onclick="showPage('safety')" id="nav-safety">Safety & Testing</a></li>
+    <li><a onclick="showPage('faq')" id="nav-faq">FAQ</a></li>
+    <li><a onclick="showPage('order')" id="nav-order" class="nav-cta">Place an Order</a></li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-badge">◆ Independently Lab-Tested</div>
+    <h1>Precision peptides.<br><em>Verified purity.</em></h1>
+    <p class="hero-sub">Orion Peptide Labs supplies pharmaceutical-grade peptides for health optimisation and performance research — backed by independent third-party testing on every batch.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="showPage('products')">View Products</button>
+      <button class="btn-secondary" onclick="showPage('safety')">Our Testing Process</button>
+    </div>
+  </div>
+  <div class="trust-bar">
+    <div class="trust-item"><div class="trust-dot"></div> Independent Lab Testing</div>
+    <div class="trust-item"><div class="trust-dot"></div> Certificate of Analysis on Every Batch</div>
+    <div class="trust-item"><div class="trust-dot"></div> Verified ≥99% Purity</div>
+    <div class="trust-item"><div class="trust-dot"></div> Secure, Discreet Delivery</div>
+    <div class="trust-item"><div class="trust-dot"></div> Expert Support</div>
+  </div>
+  <div class="section">
+    <p class="section-eyebrow">Our Products</p>
+    <h2 class="section-title">Research-grade peptides,<br>accessible to you</h2>
+    <p class="section-sub">Every compound in our catalogue is sourced from verified manufacturers, then independently retested before dispatch.</p>
+    <div class="product-grid">
+      <div class="product-card" onclick="showProduct('bpc157')">
+        <div class="product-tag tag-recovery">Recovery</div>
+        <div class="product-name">BPC-157</div>
+        <div class="product-desc">Body Protection Compound. Widely researched for tissue repair, gut health, and accelerated musculoskeletal recovery.</div>
+        <div class="product-footer"><span class="product-price">Pricing TBC</span><span class="product-link">View details →</span></div>
+      </div>
+      <div class="product-card" onclick="showProduct('cjc1295')">
+        <div class="product-tag tag-growth">Growth</div>
+        <div class="product-name">CJC-1295</div>
+        <div class="product-desc">A GHRH analogue that stimulates growth hormone release. Used for lean mass development, fat metabolism, and recovery.</div>
+        <div class="product-footer"><span class="product-price">Pricing TBC</span><span class="product-link">View details →</span></div>
+      </div>
+      <div class="product-card" onclick="showProduct('ghkcu')">
+        <div class="product-tag tag-anti-aging">Anti-Ageing</div>
+        <div class="product-name">GHK-Cu</div>
+        <div class="product-desc">Copper peptide with potent regenerative properties. Researched for skin repair, collagen synthesis, and anti-inflammatory effects.</div>
+        <div class="product-footer"><span class="product-price">Pricing TBC</span><span class="product-link">View details →</span></div>
+      </div>
+      <div class="product-card" onclick="showProduct('retatrutide')">
+        <div class="product-tag tag-weight">Metabolic</div>
+        <div class="product-name">Retatrutide</div>
+        <div class="product-desc">Triple receptor agonist (GLP-1/GIP/glucagon). Investigated for significant fat loss and metabolic regulation.</div>
+        <div class="product-footer"><span class="product-price">Pricing TBC</span><span class="product-link">View details →</span></div>
+      </div>
+      <div class="product-card" onclick="showProduct('tb500')">
+        <div class="product-tag tag-recovery">Recovery</div>
+        <div class="product-name">TB-500</div>
+        <div class="product-desc">Thymosin Beta-4 fragment. Researched for wound healing, inflammation reduction, and musculoskeletal recovery.</div>
+        <div class="product-footer"><span class="product-price">Pricing TBC</span><span class="product-link">View details →</span></div>
+      </div>
+      <div class="product-card" onclick="showProduct('stacks')">
+        <div class="product-tag tag-stack">Stacks</div>
+        <div class="product-name">Peptide Stacks</div>
+        <div class="product-desc">Curated combinations designed for specific outcomes — recovery, performance, anti-ageing, and metabolic support.</div>
+        <div class="product-footer"><span class="product-price">Pricing TBC</span><span class="product-link">View details →</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<div id="page-products" class="page">
+  <div class="section">
+    <p class="section-eyebrow">Product Catalogue</p>
+    <h2 class="section-title">All Products</h2>
+    <p class="section-sub">Click any product for full research details, mechanism of action, and pricing information.</p>
+    <div class="product-grid">
+      <div class="product-card" onclick="showProduct('bpc157')">
+        <div class="product-tag tag-recovery">Recovery</div>
+        <div class="product-name">BPC-157</div>
+        <div class="product-desc">Body Protection Compound. Widely researched for tissue repair, gut health, and accelerated musculoskeletal recovery.</div>
+        <div class="product-footer"><span class="product-price">Pricing TBC</span><span class="product-link">View details →</span></div>
+      </div>
+      <div class="product-card" onclick="showProduct('cjc1295')">
+        <div class="product-tag tag-growth">Growth</div>
+        <div class="product-name">CJC-1295</div>
+        <div class="product-desc">A GHRH analogue that stimulates growth hormone release. Used for lean mass development, fat metabolism, and recovery.</div>
+        <div class="product-footer"><span class="product-price">Pricing TBC</span><span class="product-link">View details →</span></div>
+      </div>
+      <div class="product-card" onclick="showProduct('ghkcu')">
+        <div class="product-tag tag-anti-aging">Anti-Ageing</div>
+        <div class="product-name">GHK-Cu</div>
+        <div class="product-desc">Copper peptide with potent regenerative properties. Researched for skin repair, collagen synthesis, and anti-inflammatory effects.</div>
+        <div class="product-footer"><span class="product-price">Pricing TBC</span><span class="product-link">View details →</span></div>
+      </div>
+      <div class="product-card" onclick="showProduct('retatrutide')">
+        <div class="product-tag tag-weight">Metabolic</div>
+        <div class="product-name">Retatrutide</div>
+        <div class="product-desc">Triple receptor agonist (GLP-1/GIP/glucagon). Investigated for significant fat loss and metabolic regulation.</div>
+        <div class="product-footer"><span class="product-price">Pricing TBC</span><span class="product-link">View details →</span></div>
+      </div>
+      <div class="product-card" onclick="showProduct('tb500')">
+        <div class="product-tag tag-recovery">Recovery</div>
+        <div class="product-name">TB-500</div>
+        <div class="product-desc">Thymosin Beta-4 fragment. Researched for wound healing, inflammation reduction, and musculoskeletal recovery.</div>
+        <div class="product-footer"><span class="product-price">Pricing TBC</span><span class="product-link">View details →</span></div>
+      </div>
+      <div class="product-card" onclick="showProduct('stacks')">
+        <div class="product-tag tag-stack">Stacks</div>
+        <div class="product-name">Peptide Stacks</div>
+        <div class="product-desc">Curated combinations designed for specific outcomes — recovery, performance, anti-ageing, and metabolic support.</div>
+        <div class="product-footer"><span class="product-price">Pricing TBC</span><span class="product-link">View details →</span></div>
+      </div>
+    </div>
+    <div class="product-stacks-note">
+      <strong style="color: var(--text-primary);">Need guidance?</strong> Our team can advise on the most appropriate product or stack for your research objectives. <span style="color: var(--blue-accent); cursor:pointer;" onclick="showPage('order')">Contact us →</span>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT DETAIL -->
+<div id="page-product-detail" class="page">
+  <div class="product-detail" id="product-detail-content"></div>
+</div>
+
+<!-- SAFETY -->
+<div id="page-safety" class="page">
+  <div class="section">
+    <p class="section-eyebrow">Authenticity & Safety</p>
+    <h2 class="section-title">Every batch tested.<br>Every certificate available.</h2>
+    <p class="section-sub">We believe transparency is non-negotiable. That's why every product we dispatch undergoes independent third-party analysis before it ever reaches you.</p>
+    <div class="safety-grid">
+      <div class="safety-card">
+        <div class="safety-icon">🔬</div>
+        <h3>Independent Lab Testing</h3>
+        <p>All peptides are submitted to accredited third-party laboratories for HPLC analysis. We do not test in-house — independence is the point.</p>
+      </div>
+      <div class="safety-card">
+        <div class="safety-icon">📋</div>
+        <h3>Certificate of Analysis</h3>
+        <p>Every batch ships with a full Certificate of Analysis (CoA) confirming compound identity, purity percentage, and absence of common contaminants.</p>
+      </div>
+      <div class="safety-card">
+        <div class="safety-icon">✅</div>
+        <h3>≥99% Purity Standard</h3>
+        <p>We enforce a minimum 99% purity threshold. Any batch that fails to meet this standard is rejected — no exceptions, no compromises.</p>
+      </div>
+      <div class="safety-card">
+        <div class="safety-icon">🧪</div>
+        <h3>Sterility & Endotoxin Testing</h3>
+        <p>Lyophilised peptides are tested for sterility and bacterial endotoxin levels to ensure they meet the standards expected of research compounds.</p>
+      </div>
+      <div class="safety-card">
+        <div class="safety-icon">❄️</div>
+        <h3>Cold-Chain Logistics</h3>
+        <p>Peptides are temperature-sensitive. All products are stored at controlled temperatures and dispatched with appropriate cold-chain packaging.</p>
+      </div>
+      <div class="safety-card">
+        <div class="safety-icon">🔒</div>
+        <h3>Verified Sourcing</h3>
+        <p>We work exclusively with verified manufacturers who operate under GMP guidelines and provide full traceability documentation.</p>
+      </div>
+    </div>
+    <div class="lab-cert-box">
+      <div class="cert-badge">✓ Third-Party Verified</div>
+      <h3 style="font-size: 20px; font-weight: 700; margin-bottom: 10px;">Certificates of Analysis available on request</h3>
+      <p style="font-size: 15px; color: var(--text-secondary); max-width: 500px; margin: 0 auto 24px; line-height: 1.7;">We maintain complete testing records for every batch ever dispatched. Request your product's CoA at any time by contacting our team.</p>
+      <button class="btn-primary" onclick="showPage('order')">Request a CoA</button>
+    </div>
+    <div class="disclaimer-box" style="margin-top: 32px;">
+      <strong>Research Use Disclaimer:</strong> All products sold by Orion Peptide Labs are intended strictly for research and educational purposes. They are not approved for human consumption by any regulatory authority. Orion Peptide Labs makes no medical claims and assumes no liability for misuse. Consult a qualified healthcare professional before handling any research compound.
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div id="page-faq" class="page">
+  <div class="section" style="max-width: 740px;">
+    <p class="section-eyebrow">Frequently Asked Questions</p>
+    <h2 class="section-title">Your questions, answered</h2>
+    <p class="section-sub">Can't find what you're looking for? Contact our team directly.</p>
+    <div id="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Questions and answers will be added here shortly.</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">This section is being updated. Please check back soon or contact us directly.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>How do I place an order?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">Navigate to the "Place an Order" page and complete the enquiry form. Our team will review your request and respond within 24–48 hours with confirmation and payment details.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">
+          <span>Can I request a Certificate of Analysis for my order?</span>
+          <span class="faq-toggle">+</span>
+        </div>
+        <div class="faq-a">Yes. A Certificate of Analysis is available for every batch. You can request one via the order form or by contacting us directly. It will be provided alongside your order confirmation.</div>
+      </div>
+    </div>
+    <p style="font-size: 14px; color: var(--text-muted); margin-top: 32px;">Have a question not listed here? <span style="color: var(--blue-accent); cursor: pointer;" onclick="showPage('order')">Reach out to our team →</span></p>
+  </div>
+</div>
+
+<!-- ORDER -->
+<div id="page-order" class="page">
+  <div class="section">
+    <p class="section-eyebrow">Order Enquiry</p>
+    <h2 class="section-title">Place an order</h2>
+    <p class="section-sub">Fill in the details below and our team will be in touch within 24–48 hours to confirm your order and provide payment information.</p>
+    <div class="form-section">
+      <div class="form-grid" id="order-form">
+        <div class="form-group">
+          <label class="form-label">First Name <span>*</span></label>
+          <input class="form-input" type="text" placeholder="John" id="f-firstname">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last Name <span>*</span></label>
+          <input class="form-input" type="text" placeholder="Smith" id="f-lastname">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address <span>*</span></label>
+          <input class="form-input" type="email" placeholder="you@email.com" id="f-email">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input class="form-input" type="tel" placeholder="+65 9123 4567" id="f-phone">
+        </div>
+        <div class="form-group form-full">
+          <label class="form-label">Delivery Address <span>*</span></label>
+          <input class="form-input" type="text" placeholder="Street address, unit number" id="f-address1">
+        </div>
+        <div class="form-group">
+          <label class="form-label">City <span>*</span></label>
+          <input class="form-input" type="text" placeholder="City" id="f-city">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Country <span>*</span></label>
+          <input class="form-input" type="text" placeholder="Country" id="f-country">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Postal / ZIP Code <span>*</span></label>
+          <input class="form-input" type="text" placeholder="000000" id="f-postcode">
+        </div>
+        <div class="form-group form-full" style="border-top: 1px solid var(--border); padding-top: 20px; margin-top: 8px;">
+          <label class="form-label" style="font-size:14px; font-weight:600; color: var(--text-primary);">Order Details</label>
+        </div>
+        <div class="form-group form-full">
+          <label class="form-label">Product(s) <span>*</span></label>
+          <select class="form-select" id="f-product">
+            <option value="">Select a product</option>
+            <option>BPC-157</option>
+            <option>CJC-1295</option>
+            <option>GHK-Cu</option>
+            <option>Retatrutide</option>
+            <option>TB-500</option>
+            <option>Peptide Stack — Recovery</option>
+            <option>Peptide Stack — Performance</option>
+            <option>Peptide Stack — Anti-Ageing</option>
+            <option>Peptide Stack — Metabolic</option>
+            <option>Multiple products (specify below)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Quantity / Units <span>*</span></label>
+          <input class="form-input" type="text" placeholder="e.g. 2 vials, 5mg each" id="f-quantity">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Concentration / Format</label>
+          <input class="form-input" type="text" placeholder="e.g. 5mg lyophilised" id="f-concentration">
+        </div>
+        <div class="form-group form-full">
+          <label class="form-label">Additional Notes or Requests</label>
+          <textarea class="form-textarea" placeholder="Specify multiple products, stack customisation, CoA request, or any other information..." id="f-notes"></textarea>
+        </div>
+        <div class="form-group form-full">
+          <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
+            <input type="checkbox" id="f-disclaimer" style="margin-top: 3px; flex-shrink: 0; accent-color: var(--blue-accent);">
+            <span style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">I confirm that I am 18 years of age or older and that all products ordered are for research and educational purposes only. I acknowledge that these compounds are not approved for human consumption.</span>
+          </label>
+        </div>
+        <div class="form-full">
+          <button class="form-submit" onclick="submitOrder()">Submit Order Enquiry</button>
+          <p class="form-note">Your enquiry will be sent securely to our team. We respond within 24–48 hours. No payment is taken at this stage.</p>
+        </div>
+      </div>
+      <div class="success-box" id="success-box">
+        <div class="success-title">✓ Enquiry received</div>
+        <div class="success-body">Thank you for your order enquiry. Our team will review your request and be in touch within 24–48 hours with confirmation and next steps.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p class="footer-disclaimer">
+    <strong>Research Use Only.</strong> All products offered by Orion Peptide Labs are intended solely for in vitro research and educational purposes. They are not approved by any regulatory authority for human or veterinary use, and are not intended to diagnose, treat, cure, or prevent any condition or disease. By accessing this site and placing any order, you confirm that you are aware of and comply with all applicable laws in your jurisdiction regarding research compounds.
+  </p>
+  <p>© 2026 Orion Peptide Labs. All rights reserved.</p>
+</footer>
+
+<script>
+const products = {
+  bpc157: {
+    tag: 'Recovery', tagClass: 'tag-recovery',
+    name: 'BPC-157', subtitle: 'Body Protection Compound 157',
+    overview: 'BPC-157 is a synthetic pentadecapeptide derived from a protein found in gastric juice. It has been extensively studied in preclinical research for its remarkable capacity to promote tissue healing across a wide range of biological systems — including tendons, ligaments, muscle, bone, and the gastrointestinal tract.',
+    mechanism: 'BPC-157 appears to work by upregulating growth hormone receptors, stimulating the production of growth factors such as VEGF (vascular endothelial growth factor), and modulating nitric oxide systems. It also exhibits cytoprotective effects on the GI mucosa and interacts with the dopaminergic system.',
+    uses: ['Tendon and ligament repair research','Gut permeability and GI health studies','Musculoskeletal recovery investigations','Anti-inflammatory research applications','Neurological and stress-response studies'],
+    form: 'Lyophilised powder, supplied in sealed vials. Requires reconstitution with bacteriostatic water prior to use.'
+  },
+  cjc1295: {
+    tag: 'Growth', tagClass: 'tag-growth',
+    name: 'CJC-1295', subtitle: 'Growth Hormone Releasing Hormone Analogue',
+    overview: 'CJC-1295 is a synthetic analogue of growth hormone-releasing hormone (GHRH). It is engineered with a drug affinity complex (DAC) that binds to albumin in the bloodstream, dramatically extending its half-life and enabling sustained stimulation of growth hormone secretion from the pituitary gland.',
+    mechanism: 'By binding to GHRH receptors in the anterior pituitary, CJC-1295 induces pulsatile release of growth hormone. The DAC modification extends the active window from minutes to several days, providing a prolonged anabolic environment conducive to tissue repair and metabolic regulation.',
+    uses: ['Growth hormone secretion research','Lean mass and body composition studies','Fat metabolism and lipolysis investigations','Recovery and repair research','Anti-ageing and longevity research'],
+    form: 'Lyophilised powder, supplied in sealed vials. Requires reconstitution with bacteriostatic water prior to use.'
+  },
+  ghkcu: {
+    tag: 'Anti-Ageing', tagClass: 'tag-anti-aging',
+    name: 'GHK-Cu', subtitle: 'Glycyl-L-Histidyl-L-Lysine Copper Complex',
+    overview: 'GHK-Cu is a naturally occurring copper peptide found in human plasma, urine, and saliva. First identified in the 1970s, it has been studied for its broad biological activity — particularly its role in skin regeneration, wound healing, and modulation of inflammatory pathways. Plasma levels decline significantly with age.',
+    mechanism: 'GHK-Cu activates a wide array of biological processes: it stimulates collagen and elastin synthesis, activates wound healing genes, reduces oxidative damage, and modulates expression of over 4,000 human genes according to genomic analysis. Its copper-chelating properties are integral to its regenerative function.',
+    uses: ['Skin collagen synthesis and wound healing research','Hair follicle stimulation studies','Anti-inflammatory and antioxidant research','Nerve regeneration investigations','Gene expression and genomic studies'],
+    form: 'Available as lyophilised powder or topical solution depending on research application.'
+  },
+  retatrutide: {
+    tag: 'Metabolic', tagClass: 'tag-weight',
+    name: 'Retatrutide', subtitle: 'Triple Receptor Agonist — GLP-1 / GIP / Glucagon',
+    overview: 'Retatrutide (LY3437943) is a novel triple agonist that simultaneously activates glucagon-like peptide-1 (GLP-1), glucose-dependent insulinotropic polypeptide (GIP), and glucagon receptors. It represents one of the most potent investigational metabolic compounds in current research, with clinical trials reporting significant reductions in body weight.',
+    mechanism: 'By targeting three distinct receptor pathways simultaneously, Retatrutide induces satiety, reduces energy intake, increases energy expenditure via glucagon activation, and improves insulin sensitivity. The triple-receptor mechanism appears to produce synergistic metabolic effects greater than dual or single agonists.',
+    uses: ['Obesity and metabolic syndrome research','Insulin resistance and glucose regulation studies','Cardiovascular metabolic risk investigations','Appetite and energy expenditure research','Body composition change studies'],
+    form: 'Lyophilised powder, supplied in sealed vials. Requires reconstitution with bacteriostatic water prior to use.'
+  },
+  tb500: {
+    tag: 'Recovery', tagClass: 'tag-recovery',
+    name: 'TB-500', subtitle: 'Thymosin Beta-4 Synthetic Fragment',
+    overview: 'TB-500 is a synthetic fragment of the naturally occurring peptide Thymosin Beta-4 (Tβ4), which is present in virtually all human and animal cells. It plays a critical role in actin regulation, cellular migration, and wound healing. TB-500 replicates the key active sequence of Tβ4 responsible for its regenerative properties.',
+    mechanism: 'TB-500 promotes cell migration and proliferation by sequestering G-actin and facilitating cytoskeletal restructuring. It upregulates cell-building proteins including actin and promotes angiogenesis via VEGF pathways, making it particularly relevant to studies of tissue repair, inflammation resolution, and recovery from injury.',
+    uses: ['Tendon, ligament, and muscle repair research','Cardiac tissue recovery studies','Wound healing and skin repair investigations','Neurological repair research','Inflammation and immune modulation studies'],
+    form: 'Lyophilised powder, supplied in sealed vials. Requires reconstitution with bacteriostatic water prior to use.'
+  },
+  stacks: {
+    tag: 'Stacks', tagClass: 'tag-stack',
+    name: 'Peptide Stacks', subtitle: 'Curated multi-peptide research combinations',
+    overview: 'Orion Peptide Labs offers curated peptide stacks — combinations of two or more compounds selected for their complementary mechanisms of action. Each stack is designed around a specific research objective, and every component is independently tested to the same purity standard as our individual products.',
+    mechanism: 'Stacking peptides allows researchers to investigate synergistic interactions between compounds targeting different biological pathways. For example, pairing BPC-157 with TB-500 addresses both GI/tissue repair and cytoskeletal regeneration simultaneously — creating research conditions that more closely reflect complex physiological recovery.',
+    uses: ['Recovery Stack: BPC-157 + TB-500 — comprehensive tissue and musculoskeletal repair','Performance Stack: CJC-1295 + BPC-157 — growth hormone optimisation with recovery support','Anti-Ageing Stack: GHK-Cu + CJC-1295 — skin regeneration and hormonal support','Metabolic Stack: Retatrutide + GHK-Cu — body composition and systemic regeneration'],
+    form: 'All stack components supplied as individual lyophilised vials. Custom stack configurations available on request — contact our team.'
+  }
+};
+
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const el = document.getElementById('page-' + page);
+  if (el) el.classList.add('active');
+  const navEl = document.getElementById('nav-' + page);
+  if (navEl) navEl.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function showProduct(key) {
+  const p = products[key];
+  if (!p) return;
+  const html = `
+    <button class="back-btn" onclick="showPage('products')">← Back to Products</button>
+    <div class="product-tag detail-tag ${p.tagClass}">${p.tag}</div>
+    <h1 class="detail-title">${p.name}</h1>
+    <p class="detail-subtitle">${p.subtitle}</p>
+    <div class="detail-divider"></div>
+    <p class="detail-section-title">Overview</p>
+    <p class="detail-body">${p.overview}</p>
+    <p class="detail-section-title">Mechanism of Action</p>
+    <p class="detail-body">${p.mechanism}</p>
+    <p class="detail-section-title">Research Applications</p>
+    <ul class="detail-list">${p.uses.map(u => '<li>' + u + '</li>').join('')}</ul>
+    <p class="detail-section-title">Format & Supply</p>
+    <p class="detail-body">${p.form}</p>
+    <div class="price-box">
+      <div>
+        <div class="price-label">Price per unit</div>
+        <div class="price-tbc">Pricing to be confirmed — contact us for a quote</div>
+      </div>
+      <button class="btn-primary" onclick="showPage('order')">Place an Enquiry</button>
+    </div>
+    <div class="disclaimer-box">
+      <strong>Research Use Only.</strong> This product is intended strictly for in vitro research and educational purposes. It is not approved for human or veterinary use. No medical claims are made. Always consult a qualified professional before handling research compounds.
+    </div>
+  `;
+  document.getElementById('product-detail-content').innerHTML = html;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-product-detail').classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function toggleFaq(el) {
+  const answer = el.nextElementSibling;
+  const toggle = el.querySelector('.faq-toggle');
+  const isOpen = answer.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(a => a.classList.remove('open'));
+  document.querySelectorAll('.faq-toggle').forEach(t => t.textContent = '+');
+  if (!isOpen) {
+    answer.classList.add('open');
+    toggle.textContent = '−';
+  }
+}
+
+function submitOrder() {
+  const required = ['f-firstname','f-lastname','f-email','f-address1','f-city','f-country','f-postcode','f-product','f-quantity'];
+  let valid = true;
+  required.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) { el.style.borderColor = 'rgba(239,68,68,0.6)'; valid = false; }
+    else { el.style.borderColor = ''; }
+  });
+  if (!document.getElementById('f-disclaimer').checked) {
+    alert('Please confirm the research use disclaimer before submitting.');
+    return;
+  }
+  if (!valid) { alert('Please fill in all required fields.'); return; }
+  document.getElementById('order-form').style.display = 'none';
+  document.getElementById('success-box').classList.add('show');
+}
+</script>
+</body>
+</html>
