@@ -662,6 +662,76 @@
     /* Footer */
     footer { padding: 24px 1.25rem; }
   }
+  /* Shipping page */
+  .shipping-block {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px;
+    margin-bottom: 16px;
+  }
+
+  .shipping-block-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .shipping-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(59,130,246,0.1);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .shipping-block-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .shipping-placeholder {
+    font-size: 14px;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  .shipping-table-placeholder {
+    margin-top: 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .shipping-table-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    font-style: italic;
+  }
+
+  .shipping-table-row:last-child { border-bottom: none; }
+
+  .shipping-table-head {
+    background: rgba(255,255,255,0.02);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    font-style: normal;
+  }
+
 </style>
 </head>
 <body>
@@ -683,6 +753,7 @@
   <ul class="nav-links">
     <li><a onclick="showPage('products')" id="nav-products">Products</a></li>
     <li><a onclick="showPage('safety')" id="nav-safety">Safety & Testing</a></li>
+    <li><a onclick="showPage('shipping')" id="nav-shipping">Shipping</a></li>
     <li><a onclick="showPage('faq')" id="nav-faq">FAQ</a></li>
     <li><a onclick="showPage('order')" id="nav-order" class="nav-cta">Place an Order</a></li>
   </ul>
@@ -695,6 +766,7 @@
 <ul class="nav-drawer" id="nav-drawer">
   <li><a onclick="showPage('products'); closeDrawer();" id="drawer-products">Products</a></li>
   <li><a onclick="showPage('safety'); closeDrawer();" id="drawer-safety">Safety & Testing</a></li>
+  <li><a onclick="showPage('shipping'); closeDrawer();" id="drawer-shipping">Shipping</a></li>
   <li><a onclick="showPage('faq'); closeDrawer();" id="drawer-faq">FAQ</a></li>
   <li><a onclick="showPage('order'); closeDrawer();" id="drawer-order" class="nav-cta">Place an Order</a></li>
 </ul>
@@ -902,6 +974,100 @@
   </div>
 </div>
 
+<!-- SHIPPING -->
+<div id="page-shipping" class="page">
+  <div class="section">
+    <p class="section-eyebrow">Shipping & Delivery</p>
+    <h2 class="section-title">Delivery information</h2>
+    <p class="section-sub">All orders are handled with care and discretion. Review the information below before placing your enquiry.</p>
+
+    <!-- Regions -->
+    <div class="shipping-block">
+      <div class="shipping-block-header">
+        <span class="shipping-icon">🌍</span>
+        <h3>Shipping Regions</h3>
+      </div>
+      <p class="shipping-placeholder">Information coming soon — we will list all countries and regions we ship to here.</p>
+    </div>
+
+    <!-- Delivery times -->
+    <div class="shipping-block">
+      <div class="shipping-block-header">
+        <span class="shipping-icon">📦</span>
+        <h3>Delivery Timeframes</h3>
+      </div>
+      <p class="shipping-placeholder">Estimated delivery times by region will be listed here once confirmed.</p>
+      <div class="shipping-table-placeholder">
+        <div class="shipping-table-row shipping-table-head">
+          <span>Region</span>
+          <span>Standard</span>
+          <span>Express</span>
+        </div>
+        <div class="shipping-table-row">
+          <span>—</span>
+          <span>TBC</span>
+          <span>TBC</span>
+        </div>
+        <div class="shipping-table-row">
+          <span>—</span>
+          <span>TBC</span>
+          <span>TBC</span>
+        </div>
+        <div class="shipping-table-row">
+          <span>—</span>
+          <span>TBC</span>
+          <span>TBC</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Packaging -->
+    <div class="shipping-block">
+      <div class="shipping-block-header">
+        <span class="shipping-icon">❄️</span>
+        <h3>Packaging & Cold Chain</h3>
+      </div>
+      <p class="shipping-placeholder">Details about temperature-controlled packaging and cold chain handling will be added here.</p>
+    </div>
+
+    <!-- Costs -->
+    <div class="shipping-block">
+      <div class="shipping-block-header">
+        <span class="shipping-icon">💳</span>
+        <h3>Shipping Costs</h3>
+      </div>
+      <p class="shipping-placeholder">Shipping cost structure and any free shipping thresholds will be listed here.</p>
+    </div>
+
+    <!-- Tracking -->
+    <div class="shipping-block">
+      <div class="shipping-block-header">
+        <span class="shipping-icon">🔍</span>
+        <h3>Order Tracking</h3>
+      </div>
+      <p class="shipping-placeholder">Information on how to track your order after dispatch will be provided here.</p>
+    </div>
+
+    <!-- Customs -->
+    <div class="shipping-block">
+      <div class="shipping-block-header">
+        <span class="shipping-icon">📋</span>
+        <h3>Customs & Import Duties</h3>
+      </div>
+      <p class="shipping-placeholder">Guidance on customs declarations, import duties, and buyer responsibilities by region will be outlined here.</p>
+    </div>
+
+    <div class="disclaimer-box" style="margin-top: 40px;">
+      <strong>Research Use Only.</strong> It is the buyer's sole responsibility to ensure that ordering and importing research compounds complies with all applicable laws in their jurisdiction. Orion Peptide Labs assumes no liability for customs seizures or legal issues arising from importation.
+    </div>
+
+    <div style="margin-top: 32px; text-align: center;">
+      <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 16px;">Have a shipping question not covered here?</p>
+      <button class="btn-primary" onclick="showPage('order')">Contact Us →</button>
+    </div>
+  </div>
+</div>
+
 <!-- ORDER -->
 <div id="page-order" class="page">
   <div class="section">
@@ -909,45 +1075,45 @@
     <h2 class="section-title">Place an order</h2>
     <p class="section-sub">Fill in the details below and our team will be in touch within 24–48 hours to confirm your order and provide payment information.</p>
     <div class="form-section">
-      <div class="form-grid" id="order-form">
+      <form class="form-grid" id="order-form" action="https://formspree.io/f/xnjyvvyv" method="POST" onsubmit="return validateOrder(event)">
         <div class="form-group">
           <label class="form-label">First Name <span>*</span></label>
-          <input class="form-input" type="text" placeholder="John" id="f-firstname">
+          <input class="form-input" type="text" name="First Name" placeholder="John" id="f-firstname" required>
         </div>
         <div class="form-group">
           <label class="form-label">Last Name <span>*</span></label>
-          <input class="form-input" type="text" placeholder="Smith" id="f-lastname">
+          <input class="form-input" type="text" name="Last Name" placeholder="Smith" id="f-lastname" required>
         </div>
         <div class="form-group">
           <label class="form-label">Email Address <span>*</span></label>
-          <input class="form-input" type="email" placeholder="you@email.com" id="f-email">
+          <input class="form-input" type="email" name="email" placeholder="you@email.com" id="f-email" required>
         </div>
         <div class="form-group">
           <label class="form-label">Phone Number</label>
-          <input class="form-input" type="tel" placeholder="+65 9123 4567" id="f-phone">
+          <input class="form-input" type="tel" name="Phone Number" placeholder="+65 9123 4567" id="f-phone">
         </div>
         <div class="form-group form-full">
           <label class="form-label">Delivery Address <span>*</span></label>
-          <input class="form-input" type="text" placeholder="Street address, unit number" id="f-address1">
+          <input class="form-input" type="text" name="Delivery Address" placeholder="Street address, unit number" id="f-address1" required>
         </div>
         <div class="form-group">
           <label class="form-label">City <span>*</span></label>
-          <input class="form-input" type="text" placeholder="City" id="f-city">
+          <input class="form-input" type="text" name="City" placeholder="City" id="f-city" required>
         </div>
         <div class="form-group">
           <label class="form-label">Country <span>*</span></label>
-          <input class="form-input" type="text" placeholder="Country" id="f-country">
+          <input class="form-input" type="text" name="Country" placeholder="Country" id="f-country" required>
         </div>
         <div class="form-group">
           <label class="form-label">Postal / ZIP Code <span>*</span></label>
-          <input class="form-input" type="text" placeholder="000000" id="f-postcode">
+          <input class="form-input" type="text" name="Postal Code" placeholder="000000" id="f-postcode" required>
         </div>
         <div class="form-group form-full" style="border-top: 1px solid var(--border); padding-top: 20px; margin-top: 8px;">
           <label class="form-label" style="font-size:14px; font-weight:600; color: var(--text-primary);">Order Details</label>
         </div>
         <div class="form-group form-full">
           <label class="form-label">Product(s) <span>*</span></label>
-          <select class="form-select" id="f-product">
+          <select class="form-select" name="Product" id="f-product" required>
             <option value="">Select a product</option>
             <option>BPC-157</option>
             <option>CJC-1295</option>
@@ -963,15 +1129,15 @@
         </div>
         <div class="form-group">
           <label class="form-label">Quantity / Units <span>*</span></label>
-          <input class="form-input" type="text" placeholder="e.g. 2 vials, 5mg each" id="f-quantity">
+          <input class="form-input" type="text" name="Quantity" placeholder="e.g. 2 vials, 5mg each" id="f-quantity" required>
         </div>
         <div class="form-group">
           <label class="form-label">Concentration / Format</label>
-          <input class="form-input" type="text" placeholder="e.g. 5mg lyophilised" id="f-concentration">
+          <input class="form-input" type="text" name="Concentration / Format" placeholder="e.g. 5mg lyophilised" id="f-concentration">
         </div>
         <div class="form-group form-full">
           <label class="form-label">Additional Notes or Requests</label>
-          <textarea class="form-textarea" placeholder="Specify multiple products, stack customisation, CoA request, or any other information..." id="f-notes"></textarea>
+          <textarea class="form-textarea" name="Additional Notes" placeholder="Specify multiple products, stack customisation, CoA request, or any other information..." id="f-notes"></textarea>
         </div>
         <div class="form-group form-full">
           <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
@@ -979,11 +1145,13 @@
             <span style="font-size: 13px; color: var(--text-secondary); line-height: 1.6;">I confirm that I am 18 years of age or older and that all products ordered are for research and educational purposes only. I acknowledge that these compounds are not approved for human consumption.</span>
           </label>
         </div>
+        <!-- Formspree redirect back to same page after submission -->
+        <input type="hidden" name="_next" value="https://orion-peptide-labs2.netlify.app/?submitted=true">
         <div class="form-full">
-          <button class="form-submit" onclick="submitOrder()">Submit Order Enquiry</button>
+          <button class="form-submit" type="submit">Submit Order Enquiry</button>
           <p class="form-note">Your enquiry will be sent securely to our team. We respond within 24–48 hours. No payment is taken at this stage.</p>
         </div>
-      </div>
+      </form>
       <div class="success-box" id="success-box">
         <div class="success-title">✓ Enquiry received</div>
         <div class="success-body">Thank you for your order enquiry. Our team will review your request and be in touch within 24–48 hours with confirmation and next steps.</div>
@@ -1127,21 +1295,24 @@ function toggleFaq(el) {
   }
 }
 
-function submitOrder() {
-  const required = ['f-firstname','f-lastname','f-email','f-address1','f-city','f-country','f-postcode','f-product','f-quantity'];
-  let valid = true;
-  required.forEach(id => {
-    const el = document.getElementById(id);
-    if (!el.value.trim()) { el.style.borderColor = 'rgba(239,68,68,0.6)'; valid = false; }
-    else { el.style.borderColor = ''; }
-  });
+function validateOrder(e) {
   if (!document.getElementById('f-disclaimer').checked) {
+    e.preventDefault();
     alert('Please confirm the research use disclaimer before submitting.');
-    return;
+    return false;
   }
-  if (!valid) { alert('Please fill in all required fields.'); return; }
-  document.getElementById('order-form').style.display = 'none';
-  document.getElementById('success-box').classList.add('show');
+  return true;
+}
+
+// Show success message if redirected back after Formspree submission
+if (window.location.search.includes('submitted=true')) {
+  document.addEventListener('DOMContentLoaded', function() {
+    showPage('order');
+    const form = document.getElementById('order-form');
+    const box = document.getElementById('success-box');
+    if (form) form.style.display = 'none';
+    if (box) box.classList.add('show');
+  });
 }
 </script>
 </body>
